@@ -1,0 +1,23 @@
+{
+  "name": "bamazon-cli",
+  "version": "1.0.0",
+  "description": "An Amazon-like storefront built on Node and MySQL. The app takes orders from customers and deplete stock from the store's inventory.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffreylowy/bamazon-cli.git"
+  },
+  "author": "Jeffrey Lowy <jeffreylowy@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeffreylowy/bamazon-cli/issues"
+  },
+  "homepage": "https://github.com/jeffreylowy/bamazon-cli#readme",
+  "dependencies": {
+    "inquirer": "^3.3.0",
+    "mysql": "^2.15.0"
+  }
+}
