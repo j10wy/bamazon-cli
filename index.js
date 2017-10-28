@@ -19,7 +19,7 @@ const dbConnection = mysql.createConnection({
 
 // a connection can be implicitly established by invoking a query (no .connect()).
 dbConnection.query('INSERT INTO products SET ?', post, function (error, results) {
-	if (e) {
+	if (error) {
 		throw error;
 	}
 	console.log("results:", results);
