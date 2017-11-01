@@ -3,7 +3,8 @@ const mysql = require('mysql')
 const inquirer = require('inquirer');
 
 // Require custom modules
-let purchase = require('./custom_modules/purchase');
+// @todo import methids instead of single function. Create methods for quantity and purchase
+let {purchase, quantity} = require('./custom_modules/purchase');
 
 // Make a connection to the database
 const dbConnection = mysql.createConnection({
@@ -33,7 +34,8 @@ dbConnection.query('SELECT * FROM products', function (error, results) {
 	}, {
 		type: 'input',
 		name: 'item_quantity',
-		message: 'How many would you would like to purchase?'
+		message: 'How many would you would like to purchase?',
+		validate: quantity
 	}]).then(function inqAnswers(answers) {
 		console.log(answers);
 		dbConnection.end();
