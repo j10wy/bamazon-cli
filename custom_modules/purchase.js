@@ -1,12 +1,13 @@
 const colors = require('colors');
 
-function Purchase(item_id, productsArray) {
+function Purchase(item_id, bamazonObj) {
 	this.item = parseInt(item_id);
-	this.productsArray = productsArray;
+	this.bamazon = bamazonObj;
+	this.productsArray = this.bamazon.productsArray;
 }
 
 // @todo Comment code for validate method.
-Purchase.prototype.validate = function validate() {
+Purchase.prototype.validate = function () {
 	if (isNaN(this.item)) {
 		console.log("\n\nItem is a NOT number. Please enter a valid ID number\n".red);
 		return false;
@@ -15,6 +16,8 @@ Purchase.prototype.validate = function validate() {
 		this.productsArray.map((item, index) => {
 			if (this.item === item.item_id) {
 				valid_product_id = true;
+				this.bamazon.selectedItem = item;
+				console.log(this.bamazon.selectedItem);
 			}
 		});
 		if (valid_product_id) {
@@ -26,10 +29,22 @@ Purchase.prototype.validate = function validate() {
 	}
 }
 
-// @todo finish Quantity Constructor.
-function Quantity(num_to_purchase) {
-	console.log(`\nNumber of items to purchase: ${num_to_purchase}`);
-	return true;
+// @todo Store the slected item and all of its properties in the 
+function Quantity(num_items, bamazonObj) {
+	this.requestedQuantity = parseInt(num_items);
+	this.bamazon = bamazonObj;
+	// this.selectedItem = bamazonObj.selectedItem;
+}
+
+Quantity.prototype.validate = function () {
+	console.log("baamazzzzonnn", this.bamazon)
+	if (isNaN(this.requestedQuantity)) {
+		console.log("\n\nrequestedQuantity is a NOT number. Please enter a number\n".red);
+		return false;
+	} else {
+		// @todo finish Quantity Constructor.
+	}
+
 }
 
 

@@ -17,18 +17,22 @@ const dbConnection = mysql.createConnection({
 	database: 'bamazon'
 });
 
-var productsArray = [];
-
 // Create the inital query to the products table
 dbConnection.query('SELECT * FROM products', function (error, results) {
 	// Throw an error if the database cannot be queried. 
 	if (error) {
 		throw error;
 	}
-	//Initialize the products array this will be passed Inquirer to validate
-	productsArray = results;
-	productsArray.map((item, index) => {
-		// Alternate the colors for each product as they are displayed to the terminal
+
+	// Initialize the bamazon object.
+	// This object will be passed around the application to keep track of the state of each product search
+	var bamazon = {
+		productsArray: results,
+		selectedItem: null
+	}
+
+	// Alternate the colors for each product as they are displayed to the terminal
+	bamazon.productsArray.map((item, index) => {
 		var color = index % 2 === 0 ? "red" : "magenta";
 		console.log(`Item ID: ${item.item_id} | Name: ${item.product_name} | Price: $${item.price}` [color]);
 	});
@@ -42,7 +46,7 @@ dbConnection.query('SELECT * FROM products', function (error, results) {
 		// 1) Entry is a number
 		// 2) Confirm the number is matches the ID of a product in the database
 		validate: (value) => {
-			return new Purchase(value, productsArray).validate();
+			return new Purchase(value, bamazon).validate();
 		}
 	}, {
 		type: 'input',
@@ -50,7 +54,7 @@ dbConnection.query('SELECT * FROM products', function (error, results) {
 		message: 'How many would you would like to purchase?',
 		// Use the Quantity constructor created by the purchase module to make sure there is enough of the product in stock to fulfill the customer's order.
 		validate: (value) => {
-			return new Quantity(value, productsArray).validate();
+			return new Quantity(value, bamazon).validate();
 		}
 	}]).then(function inqAnswers(answers) {
 		console.log(answers);
